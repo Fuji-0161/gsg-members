@@ -87,6 +87,59 @@
   }
   .card-item h3 { color: var(--primary); margin-bottom: 8px; }
   .card-item p { font-size: 0.9rem; color: var(--muted); }
+  .member-content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .member-content-card {
+    background: linear-gradient(135deg, #1e3a5f 0%, #312e81 100%);
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(30,41,59,0.18);
+  }
+  .member-content-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(30,41,59,0.28);
+  }
+  .member-content-card:active { transform: scale(0.98); }
+  .member-content-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    background: rgba(124,58,237,0.5);
+    border: 1px solid rgba(196,181,253,0.5);
+    color: #c4b5fd;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .member-content-card h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+  .member-content-card p {
+    font-size: 0.82rem;
+    color: #c7d2fe;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .member-content-arrow {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #a5b4fc;
+    font-weight: 700;
+  }
   footer {
     text-align: center;
     padding: 30px 20px;
@@ -109,6 +162,7 @@
 <li><a href="#resources">学習リソース</a></li>
 <li><a href="#members">メンバー</a></li>
 <li><a href="#contact">連絡先</a></li>
+<li><a href="#member-content">会員コンテンツ</a></li>
 </ul>
 </nav>
 <main>
@@ -149,6 +203,18 @@
 <section id="contact">
 <h2>連絡先</h2>
 <p>お問い合わせや参加希望は、運営までご連絡ください。</p>
+</section>
+<section id="member-content">
+<h2>GSG会員向けコンテンツ</h2>
+<p>メンバー限定のガイド・資料です。ご活用ください。</p>
+<div class="member-content-grid">
+  <a href="./iphone-claude-code-guide.html" class="member-content-card">
+    <div class="member-content-badge">GUIDE</div>
+    <h3>iPhone × Claude Code × GitHub Pages 完全ガイド</h3>
+    <p>iPhoneだけでAI自動Web公開を実現する手順を、STEP by STEPで解説。コード不要でWebサイトを更新・デプロイできます。</p>
+    <div class="member-content-arrow">読む →</div>
+  </a>
+</div>
 </section>
 </main>
 <footer>
