@@ -152,6 +152,66 @@
   }
   p { line-height: 1.75; }
 
+  /* ── NOTION BANNER ── */
+  .notion-banner {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 60%, #0891b2 100%);
+    border: none;
+    padding: 0;
+    overflow: hidden;
+  }
+  .notion-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    flex-wrap: wrap;
+  }
+  .notion-banner-left { flex: 1; min-width: 0; }
+  .notion-banner-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #bae6fd;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+  .notion-banner-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .notion-banner-desc {
+    font-size: 0.8rem;
+    color: #bae6fd;
+    line-height: 1.65;
+  }
+  .notion-banner-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: #0369a1;
+    font-weight: 800;
+    font-size: 0.88rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .notion-banner-btn:hover { background: #e0f2fe; transform: translateY(-2px); }
+  .notion-banner-btn:active { transform: scale(0.97); }
+
   /* ── SECTION VARIANTS ── */
   .section-cyan {
     background: var(--sky100);
@@ -373,6 +433,7 @@
 </header>
 <nav>
   <ul>
+    <li><a href="#notion-access" class="nav-highlight">📋 Notion</a></li>
     <li><a href="#contents" class="nav-highlight">コンテンツ</a></li>
     <li><a href="#about">GSGとは？</a></li>
     <li><a href="#conditions">参加条件</a></li>
@@ -382,6 +443,18 @@
   </ul>
 </nav>
 <main>
+
+  <!-- Notionアクセスバナー -->
+  <section id="notion-access" class="notion-banner">
+    <div class="notion-banner-inner">
+      <div class="notion-banner-left">
+        <div class="notion-banner-badge">MEMBERS ONLY</div>
+        <div class="notion-banner-title">📋 メンバー限定情報サイト（Notion）</div>
+        <div class="notion-banner-desc">自己紹介・活動記録・限定資料などをまとめたメンバー専用ページです。<br>閲覧にはNotionアカウントが必要です（無料可）。アクセス申請はFujiまで。</div>
+      </div>
+      <a href="https://www.notion.so/e3ee7ea76b7d4fea9717954eaf6e9737?v=0fa8ac316764465988652dcb2a9de2ef" target="_blank" rel="noopener" class="notion-banner-btn">Notionを開く →</a>
+    </div>
+  </section>
 
   <!-- コンテンツ -->
   <section id="contents" class="contents-section">
@@ -400,7 +473,7 @@
   <!-- GSGとは？ -->
   <section id="about">
     <h2>GSGとは？</h2>
-    <p>GSG（GPT Study Group）は、ランドマーク参加者を中心にテッド（小笠原哲夫）とFUJI（藤原洋介）が2024年2月24日に立ち上げた、AI技術とツール活用を探求するグループです。</p>
+    <p>GSG（GPT Study Group）は、ランドマーク参加者を中心にテッドとFUJIが2024年2月24日に立ち上げた、AI技術とツール活用を探求するグループです。</p>
     <p style="margin-top:10px;">毎週土曜朝7:30から定例会を開催し、Chat GPTを始めNotebookLM、Googleツール、Mapify、GAS・PythonなどのさまざまなAI・ITツール活用をテーマに議論・情報共有しています。</p>
     <p style="margin-top:10px;">メンバーは医療、教育、クリエイティブ、不動産、自然保護など多様な分野から集まり、AIを通じて自己の可能性拡大と社会貢献を目指しています。</p>
     <p style="margin-top:8px; font-size:0.8rem; color:var(--muted);">最終更新：2026/04/18　NotebookLM+GPT</p>
