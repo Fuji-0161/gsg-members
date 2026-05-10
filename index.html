@@ -152,6 +152,19 @@
   }
   p { line-height: 1.75; }
 
+  /* ── SECTION VARIANTS ── */
+  .section-cyan {
+    background: var(--sky100);
+    border-color: var(--border);
+  }
+  .section-cyan h2 { color: var(--primary-x); }
+
+  .section-rules {
+    background: var(--card);
+    border-left: 4px solid var(--cyan);
+  }
+  .section-rules h2 { color: #0e7490; border-bottom-color: var(--border); }
+
   /* ── LISTS ── */
   .rule-list {
     list-style: none;
@@ -361,7 +374,8 @@
 <nav>
   <ul>
     <li><a href="#contents" class="nav-highlight">コンテンツ</a></li>
-    <li><a href="#about">GSGについて</a></li>
+    <li><a href="#about">GSGとは？</a></li>
+    <li><a href="#conditions">参加条件</a></li>
     <li><a href="#schedule">活動予定</a></li>
     <li><a href="#resources">学習リソース</a></li>
     <li><a href="#contact">連絡先</a></li>
@@ -383,39 +397,40 @@
     </div>
   </section>
 
-  <!-- GSGについて -->
+  <!-- GSGとは？ -->
   <section id="about">
-    <h2>GSGについて</h2>
-
-    <h3>GSGとは？</h3>
+    <h2>GSGとは？</h2>
     <p>GSG（GPT Study Group）は、ランドマーク参加者を中心にテッド（小笠原哲夫）とFUJI（藤原洋介）が2024年2月24日に立ち上げた、AI技術とツール活用を探求するグループです。</p>
     <p style="margin-top:10px;">毎週土曜朝7:30から定例会を開催し、Chat GPTを始めNotebookLM、Googleツール、Mapify、GAS・PythonなどのさまざまなAI・ITツール活用をテーマに議論・情報共有しています。</p>
     <p style="margin-top:10px;">メンバーは医療、教育、クリエイティブ、不動産、自然保護など多様な分野から集まり、AIを通じて自己の可能性拡大と社会貢献を目指しています。</p>
     <p style="margin-top:8px; font-size:0.8rem; color:var(--muted);">最終更新：2026/04/18　NotebookLM+GPT</p>
-
     <div class="summary-box">
       💡 <strong>ひとことで言うと</strong><br>
       AIに興味を持ち情報交換を通して、仕事にとどまらず生活面においても豊かに生きることを楽しみ合うグループです。
     </div>
+  </section>
 
-    <h3>参加条件</h3>
+  <!-- 参加条件 -->
+  <section id="conditions" class="section-cyan">
+    <h2>参加条件</h2>
     <ul class="rule-list">
       <li><span class="rule-num">①</span> Landmark BTC卒業生であること</li>
     </ul>
+  </section>
 
-    <h3>参加時のルール</h3>
+  <!-- 参加時のルール -->
+  <section id="rules" class="section-rules">
+    <h2>参加時のルール</h2>
     <ul class="rule-list">
       <li><span class="rule-num">①</span> GSGメンバーLINEに参加</li>
       <li><span class="rule-num">②</span> 専用自己紹介GPTsで自己紹介を作成し、LINEに共有する</li>
       <li><span class="rule-num">③</span> 紹介したい場合はLINEに共有しメンバーに許可を得たら招待をする</li>
       <li><span class="rule-num">④</span> GSG MTG（毎週土曜日 7:30〜）で自己紹介</li>
     </ul>
-
     <div class="link-box">
       <div class="link-box-label">自己紹介用 GPTs</div>
       <a href="https://chatgpt.com/share/6801953f-ea88-8005-bcee-433fd1d8e875" target="_blank" rel="noopener" class="ext-link">🤖 自己紹介GPTsを開く →</a>
     </div>
-
     <div class="link-box">
       <div class="link-box-label">GSGメンバー用 Notion（メンバー限定）</div>
       <a href="https://www.notion.so/e3ee7ea76b7d4fea9717954eaf6e9737?v=0fa8ac316764465988652dcb2a9de2ef" target="_blank" rel="noopener" class="ext-link">📋 Notionサイトを開く →</a>
