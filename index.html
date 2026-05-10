@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPT Study Group (GSG) - メンバー向け情報サイト</title>
+<style>
+  :root {
+    --primary: #10a37f;
+    --primary-dark: #0d8a6a;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.4rem; margin-bottom: 10px; letter-spacing: 0.05em; }
+  header p { font-size: 1.05rem; opacity: 0.95; }
+  nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  nav a:hover { color: var(--primary); }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: var(--primary);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+  }
+  section h3 { margin: 16px 0 8px; font-size: 1.1rem; }
+  ul.list { list-style: disc; padding-left: 24px; }
+  ul.list li { margin-bottom: 6px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .card-item {
+    background: var(--bg);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .card-item h3 { color: var(--primary); margin-bottom: 8px; }
+  .card-item p { font-size: 0.9rem; color: var(--muted); }
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+</style>
+</head>
+<body>
+<header>
+<h1>GPT Study Group (GSG)</h1>
+<p>メンバー向け情報サイト</p>
+</header>
+<nav>
+<ul>
+<li><a href="#about">GSGについて</a></li>
+<li><a href="#schedule">活動予定</a></li>
+<li><a href="#resources">学習リソース</a></li>
+<li><a href="#members">メンバー</a></li>
+<li><a href="#contact">連絡先</a></li>
+</ul>
+</nav>
+<main>
+<section id="about">
+<h2>GSGについて</h2>
+<p>GPT Study Group (GSG) は、生成AI・大規模言語モデル (LLM) について学び合うコミュニティです。本サイトはメンバー向けに活動情報・学習資料・お知らせを共有することを目的としています。</p>
+</section>
+<section id="schedule">
+<h2>活動予定 / お知らせ</h2>
+<ul class="list">
+<li>次回勉強会: 日程調整中</li>
+<li>テーマ: 未定</li>
+<li>場所: オンライン / オフライン</li>
+</ul>
+<p style="margin-top:12px; color: var(--muted); font-size: 0.9rem;">※ 詳細が決まり次第、更新します。</p>
+</section>
+<section id="resources">
+<h2>学習リソース</h2>
+<div class="grid">
+<div class="card-item">
+<h3>公式ドキュメント</h3>
+<p>OpenAI / Anthropic / Google などの公式ドキュメント集</p>
+</div>
+<div class="card-item">
+<h3>論文・記事</h3>
+<p>勉強会で取り上げた論文や参考記事のリンク集</p>
+</div>
+<div class="card-item">
+<h3>ハンズオン資料</h3>
+<p>過去の勉強会で使用したコードやスライド</p>
+</div>
+</div>
+</section>
+<section id="members">
+<h2>メンバー</h2>
+<p>GSGは、生成AIに興味のあるメンバーで構成されています。新規メンバー随時募集中です。</p>
+</section>
+<section id="contact">
+<h2>連絡先</h2>
+<p>お問い合わせや参加希望は、運営までご連絡ください。</p>
+</section>
+</main>
+<footer>
+<p>&copy; 2026 GPT Study Group (GSG)</p>
+</footer>
+</body>
+</html>
