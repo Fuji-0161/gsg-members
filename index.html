@@ -51,6 +51,11 @@
     font-size: 0.95rem;
   }
   nav a:hover { color: var(--primary); }
+  nav a.nav-highlight {
+    color: #7c3aed;
+    font-weight: 700;
+  }
+  nav a.nav-highlight:hover { color: #5b21b6; }
   main {
     max-width: 960px;
     margin: 0 auto;
@@ -70,9 +75,15 @@
     border-bottom: 2px solid var(--border);
     padding-bottom: 8px;
   }
-  section h3 { margin: 16px 0 8px; font-size: 1.1rem; }
-  ul.list { list-style: disc; padding-left: 24px; }
-  ul.list li { margin-bottom: 6px; }
+  section h3 { margin: 16px 0 8px; font-size: 1.1rem; color: var(--text); }
+  ul.list { list-style: none; padding-left: 0; }
+  ul.list li { margin-bottom: 8px; padding-left: 1.2em; position: relative; }
+  ul.list li::before { content: '①'; position: absolute; left: 0; }
+  ul.list li:nth-child(2)::before { content: '②'; }
+  ul.list li:nth-child(3)::before { content: '③'; }
+  ul.list li:nth-child(4)::before { content: '④'; }
+  ul.list.disc { list-style: disc; padding-left: 24px; }
+  ul.list.disc li::before { content: none; }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -87,6 +98,20 @@
   }
   .card-item h3 { color: var(--primary); margin-bottom: 8px; }
   .card-item p { font-size: 0.9rem; color: var(--muted); }
+  /* コンテンツセクション */
+  .contents-section {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border: none;
+  }
+  .contents-section h2 {
+    color: #c4b5fd;
+    border-bottom-color: rgba(196,181,253,0.3);
+  }
+  .contents-section > p {
+    color: #c7d2fe;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
   .member-content-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -94,18 +119,20 @@
     margin-top: 16px;
   }
   .member-content-card {
-    background: linear-gradient(135deg, #1e3a5f 0%, #312e81 100%);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(196,181,253,0.35);
     border-radius: 10px;
     padding: 20px;
     color: #fff;
     text-decoration: none;
     display: block;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 4px 14px rgba(30,41,59,0.18);
+    transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
   }
   .member-content-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(30,41,59,0.28);
+    background: rgba(255,255,255,0.13);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
   .member-content-card:active { transform: scale(0.98); }
   .member-content-badge {
@@ -140,6 +167,44 @@
     color: #a5b4fc;
     font-weight: 700;
   }
+  /* 外部リンク */
+  .ext-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .ext-link:hover { border-bottom-color: var(--primary); }
+  .link-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 10px;
+  }
+  .link-box-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .summary-box {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: #14532d;
+    line-height: 1.7;
+  }
   footer {
     text-align: center;
     padding: 30px 20px;
@@ -157,28 +222,76 @@
 </header>
 <nav>
 <ul>
+<li><a href="#contents" class="nav-highlight">コンテンツ</a></li>
 <li><a href="#about">GSGについて</a></li>
 <li><a href="#schedule">活動予定</a></li>
 <li><a href="#resources">学習リソース</a></li>
-<li><a href="#members">メンバー</a></li>
 <li><a href="#contact">連絡先</a></li>
-<li><a href="#member-content">会員コンテンツ</a></li>
 </ul>
 </nav>
 <main>
+
+<section id="contents" class="contents-section">
+<h2>コンテンツ</h2>
+<p>メンバー限定のガイド・資料です。ご活用ください。</p>
+<div class="member-content-grid">
+  <a href="./iphone-claude-code-guide.html" class="member-content-card">
+    <div class="member-content-badge">GUIDE</div>
+    <h3>iPhone × Claude Code × GitHub Pages 完全ガイド</h3>
+    <p>iPhoneだけでAI自動Web公開を実現する手順を、STEP by STEPで解説。コード不要でWebサイトを更新・デプロイできます。</p>
+    <div class="member-content-arrow">読む →</div>
+  </a>
+</div>
+</section>
+
 <section id="about">
 <h2>GSGについて</h2>
-<p>GPT Study Group (GSG) は、生成AI・大規模言語モデル (LLM) について学び合うコミュニティです。本サイトはメンバー向けに活動情報・学習資料・お知らせを共有することを目的としています。</p>
+<h3>【GSGとは？】</h3>
+<p>GSG（GPT Study Group）は、ランドマーク参加者を中心にテッド（小笠原哲夫）とFUJI（藤原洋介）が2024年2月24日に立ち上げた、AI技術とツール活用を探求するグループです。</p>
+<p style="margin-top:10px;">毎週土曜朝7:30から定例会を開催し、Chat GPTを始めNotebookLM、Googleツール、Mapify、GAS・PythonなどのさまざまなAI・ITツール活用をテーマに議論・情報共有しています。</p>
+<p style="margin-top:10px;">メンバーは医療、教育、クリエイティブ、不動産、自然保護など多様な分野から集まり、AIを通じて自己の可能性拡大と社会貢献を目指しています。</p>
+<p style="margin-top:10px; font-size:0.85rem; color:var(--muted);">最終更新：2026/04/18　NotebookLM+GPT</p>
+
+<div class="summary-box">
+💡 <strong>ひとことで言うと</strong><br>
+AIに興味を持ち情報交換を通して、仕事にとどまらず生活面においても豊かに生きることを楽しみ合うグループです。
+</div>
+
+<h3>参加条件</h3>
+<ul class="list">
+  <li>Landmark BTC卒業生であること</li>
+</ul>
+
+<h3>参加時のルール</h3>
+<ul class="list">
+  <li>GSGメンバーLINEに参加</li>
+  <li>専用自己紹介GPTsで自己紹介を作成し、LINEに共有する</li>
+  <li>紹介したい場合はLINEに共有しメンバーに許可を得たら招待をする</li>
+  <li>GSG MTG（毎週土曜日 7:30〜）で自己紹介</li>
+</ul>
+
+<div class="link-box">
+  <div class="link-box-label">自己紹介用 GPTs</div>
+  <a href="https://chatgpt.com/share/6801953f-ea88-8005-bcee-433fd1d8e875" target="_blank" rel="noopener" class="ext-link">🤖 自己紹介GPTsを開く →</a>
+</div>
+
+<div class="link-box" style="margin-top:10px;">
+  <div class="link-box-label">GSGメンバー用 Notion（メンバー限定）</div>
+  <a href="https://www.notion.so/e3ee7ea76b7d4fea9717954eaf6e9737?v=0fa8ac316764465988652dcb2a9de2ef" target="_blank" rel="noopener" class="ext-link">📋 Notionサイトを開く →</a>
+  <p style="font-size:0.82rem; color:var(--muted); margin-top:6px;">※ メンバー限定情報・自己紹介などをまとめています</p>
+</div>
 </section>
+
 <section id="schedule">
 <h2>活動予定 / お知らせ</h2>
-<ul class="list">
-<li>次回勉強会: 日程調整中</li>
-<li>テーマ: 未定</li>
-<li>場所: オンライン / オフライン</li>
+<ul class="list disc">
+<li style="padding-left:0;">次回勉強会: 日程調整中</li>
+<li style="padding-left:0;">テーマ: 未定</li>
+<li style="padding-left:0;">場所: オンライン / オフライン</li>
 </ul>
 <p style="margin-top:12px; color: var(--muted); font-size: 0.9rem;">※ 詳細が決まり次第、更新します。</p>
 </section>
+
 <section id="resources">
 <h2>学習リソース</h2>
 <div class="grid">
@@ -196,26 +309,12 @@
 </div>
 </div>
 </section>
-<section id="members">
-<h2>メンバー</h2>
-<p>GSGは、生成AIに興味のあるメンバーで構成されています。新規メンバー随時募集中です。</p>
-</section>
+
 <section id="contact">
 <h2>連絡先</h2>
 <p>お問い合わせや参加希望は、運営までご連絡ください。</p>
 </section>
-<section id="member-content">
-<h2>GSG会員向けコンテンツ</h2>
-<p>メンバー限定のガイド・資料です。ご活用ください。</p>
-<div class="member-content-grid">
-  <a href="./iphone-claude-code-guide.html" class="member-content-card">
-    <div class="member-content-badge">GUIDE</div>
-    <h3>iPhone × Claude Code × GitHub Pages 完全ガイド</h3>
-    <p>iPhoneだけでAI自動Web公開を実現する手順を、STEP by STEPで解説。コード不要でWebサイトを更新・デプロイできます。</p>
-    <div class="member-content-arrow">読む →</div>
-  </a>
-</div>
-</section>
+
 </main>
 <footer>
 <p>&copy; 2026 GPT Study Group (GSG)</p>
