@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ManusでAIテトリスを作ってみた | GSG</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=DM+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:  #0284c7;
+    --primary-d:#0369a1;
+    --primary-x:#075985;
+    --cyan:     #0891b2;
+    --bg:       #f0f9ff;
+    --card:     #ffffff;
+    --text:     #0c4a6e;
+    --muted:    #64748b;
+    --border:   #bae6fd;
+    --sky100:   #e0f2fe;
+    --sky300:   #7dd3fc;
+    --cyan100:  #cffafe;
+    --green:    #16a34a;
+    --lgreen:   #dcfce7;
+    --amber:    #d97706;
+    --lamber:   #fef3c7;
+    --orange:   #ea580c;
+    --lorange:  #ffedd5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 0 0 80px; }
+
+  /* ── HOME LINK ── */
+  .home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 16px 20px 0;
+    padding: 8px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--primary-x);
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: background 0.15s;
+  }
+  .home-link:hover { background: var(--sky100); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary-x) 0%, var(--primary-d) 55%, var(--cyan) 100%);
+    color: #fff;
+    padding: 52px 24px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -40px;
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, rgba(8,145,178,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(2,132,199,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(186,230,253,0.5);
+    color: #bae6fd;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+    line-height: 1;
+  }
+  .hero h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: #bae6fd;
+    line-height: 1.75;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-pill {
+    background: rgba(7,89,133,0.55);
+    border: 1.5px solid rgba(125,211,252,0.6);
+    color: #7dd3fc;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { padding: 32px 20px 0; }
+
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(2,132,199,0.06);
+  }
+
+  .section-label {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .label-blue   { color: var(--primary); background: var(--sky100); }
+  .label-cyan   { color: #0e7490; background: var(--cyan100); }
+  .label-green  { color: var(--green); background: var(--lgreen); }
+  .label-orange { color: var(--orange); background: var(--lorange); }
+
+  .card h2 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--primary-x);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .card p { font-size: 0.9rem; color: var(--text); line-height: 1.75; }
+  .card p + p { margin-top: 10px; }
+
+  /* ── WHAT IS MANUS ── */
+  .manus-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .manus-feat {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .manus-feat-icon { font-size: 24px; margin-bottom: 6px; }
+  .manus-feat-title { font-size: 12px; font-weight: 700; color: var(--primary-x); margin-bottom: 3px; }
+  .manus-feat-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* ── PROCESS STEPS ── */
+  .process-steps { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .process-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .process-num {
+    background: linear-gradient(135deg, var(--primary-d), var(--cyan));
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .process-body { flex: 1; min-width: 0; }
+  .process-title { font-size: 13px; font-weight: 700; color: var(--primary-x); margin-bottom: 3px; }
+  .process-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CHAT LINK ── */
+  .chat-link-box {
+    background: linear-gradient(135deg, var(--primary-x) 0%, var(--cyan) 100%);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .chat-link-info { flex: 1; min-width: 0; }
+  .chat-link-label {
+    font-size: 10px;
+    color: #bae6fd;
+    font-family: 'DM Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .chat-link-title { font-size: 14px; font-weight: 800; color: #fff; }
+  .chat-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: var(--primary-d);
+    font-weight: 800;
+    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: background 0.15s, transform 0.15s;
+  }
+  .chat-link-btn:hover { background: #e0f2fe; transform: translateY(-2px); }
+  .chat-link-btn:active { transform: scale(0.97); }
+
+  /* ── GAME SECTION ── */
+  .game-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(2,132,199,0.06);
+  }
+  .game-card-header {
+    background: linear-gradient(90deg, var(--primary-x), var(--cyan));
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .game-card-header-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .game-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    color: var(--primary-d);
+    font-weight: 800;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .game-open-btn:hover { background: #e0f2fe; transform: translateY(-1px); }
+  .game-iframe-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 70%;
+    background: #0c4a6e;
+  }
+  .game-iframe-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .game-iframe-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #bae6fd;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+  }
+  .game-iframe-fallback-icon { font-size: 48px; }
+
+  /* ── POINT BOX ── */
+  .point-box {
+    background: var(--lgreen);
+    border: 1.5px solid #86efac;
+    border-left: 4px solid var(--green);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 0.88rem;
+    color: #14532d;
+    line-height: 1.75;
+  }
+  .point-box strong { color: var(--green); }
+
+  /* ── INVITATION ── */
+  .invite-card {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 55%, #0891b2 100%);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 16px;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(3,105,161,0.25);
+  }
+  .invite-card h2 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .invite-card p { font-size: 0.88rem; color: #bae6fd; line-height: 1.75; margin-bottom: 16px; }
+  .invite-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    color: var(--primary-d);
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    transition: background 0.15s, transform 0.15s;
+    width: 100%;
+    justify-content: center;
+  }
+  .invite-btn:hover { background: #e0f2fe; transform: translateY(-2px); }
+  .invite-btn:active { transform: scale(0.97); }
+  .invite-note {
+    margin-top: 12px;
+    font-size: 11px;
+    color: rgba(186,230,253,0.7);
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── BACK TOP ── */
+  .back-top {
+    text-align: center;
+    margin: 20px 20px 0;
+    padding: 14px;
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .back-top a { color: var(--primary); text-decoration: none; font-weight: 700; }
+  .back-top a:hover { text-decoration: underline; }
+
+  .page-footer {
+    text-align: center;
+    padding: 28px 20px;
+    color: var(--muted);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 1.45rem; }
+    .manus-features { grid-template-columns: 1fr; }
+    .section { padding: 24px 16px 0; }
+    .card { padding: 18px; }
+  }
+  @media (min-width: 720px) {
+    .hero { border-radius: 0 0 16px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a href="./index.html" class="home-link">← GSGホームへ戻る</a>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-badge">GSG コンテンツ</div>
+    <span class="hero-emoji">🎮</span>
+    <h1>ManusでAIテトリスを<br>作ってみた！</h1>
+    <p class="hero-sub">
+      AIエージェント「Manus」に指示するだけで、<br>
+      テトリスゲームを無料で作成＆デプロイ。<br>
+      作成プロセスと成果物をまとめました。
+    </p>
+    <div class="hero-pills">
+      <div class="hero-pill">Manus</div>
+      <div class="hero-pill">AIエージェント</div>
+      <div class="hero-pill">無料アカウント</div>
+      <div class="hero-pill">自動デプロイ</div>
+    </div>
+  </header>
+
+  <!-- Manusとは？ -->
+  <div class="section">
+    <div class="card">
+      <span class="section-label label-blue">ABOUT MANUS</span>
+      <h2>Manusとは？</h2>
+      <p>ManusはAIエージェント型のサービスで、チャットで指示するだけでコーディング・検索・デプロイまで自律的にこなしてくれます。無料アカウントでもWebアプリを作成して公開URLを発行できるのが魅力です。</p>
+      <p>GenSparkと同様に、作ったWebアプリをそのままURLとして共有できるため、テスト版のWebアプリをサクッと作って共有したい場面に特に役立ちます。</p>
+      <div class="manus-features">
+        <div class="manus-feat">
+          <div class="manus-feat-icon">💬</div>
+          <div class="manus-feat-title">チャットで指示</div>
+          <div class="manus-feat-desc">日本語でやりたいことを伝えるだけ</div>
+        </div>
+        <div class="manus-feat">
+          <div class="manus-feat-icon">⚙️</div>
+          <div class="manus-feat-title">自律実行</div>
+          <div class="manus-feat-desc">コーディングから動作確認まで自動</div>
+        </div>
+        <div class="manus-feat">
+          <div class="manus-feat-icon">🌐</div>
+          <div class="manus-feat-title">自動デプロイ</div>
+          <div class="manus-feat-desc">公開URLを即発行・共有可能</div>
+        </div>
+        <div class="manus-feat">
+          <div class="manus-feat-icon">🆓</div>
+          <div class="manus-feat-title">無料アカウント</div>
+          <div class="manus-feat-desc">登録だけで今すぐ試せる</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作成プロセス -->
+  <div class="section">
+    <div class="card">
+      <span class="section-label label-cyan">PROCESS</span>
+      <h2>🛠 作成プロセス</h2>
+      <p>Manusとのチャットでテトリスを作った流れです。</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <div class="process-body">
+            <div class="process-title">Manusにテトリス作成を依頼</div>
+            <div class="process-desc">チャットで「テトリスを作って」と指示。仕様の詳細を決めなくてもManusが自律的に設計・実装を開始。</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <div class="process-body">
+            <div class="process-title">Manusが自動でコーディング</div>
+            <div class="process-desc">HTML / CSS / JavaScriptを自動生成。動作確認・修正も自律的に実施。</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <div class="process-body">
+            <div class="process-title">自動デプロイ → URL発行</div>
+            <div class="process-desc">完成後にそのまま公開URLを発行。コピペで誰でもアクセス可能に。</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <div class="process-body">
+            <div class="process-title">チャット履歴も共有可能</div>
+            <div class="process-desc">作成プロセス（Manusとのやりとり）もURLで共有できる。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-link-box">
+        <div class="chat-link-info">
+          <div class="chat-link-label">MANUS CHAT LOG</div>
+          <div class="chat-link-title">💬 作成時のチャット履歴を見る</div>
+        </div>
+        <a href="https://manus.im/share/c17FFZUyaTnS3cfAtGY53g" target="_blank" rel="noopener" class="chat-link-btn">開く →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成果物 -->
+  <div class="section">
+    <div class="game-card">
+      <div class="game-card-header">
+        <div class="game-card-header-title">🎮 完成品 — テトリスゲーム</div>
+        <a href="https://tetrisgame-tphfrd3e.manus.space" target="_blank" rel="noopener" class="game-open-btn">別タブで開く ↗</a>
+      </div>
+      <div class="game-iframe-wrap">
+        <iframe
+          src="https://tetrisgame-tphfrd3e.manus.space"
+          title="Manus製テトリスゲーム"
+          loading="lazy"
+          allow="fullscreen"
+        ></iframe>
+        <noscript>
+          <div class="game-iframe-fallback">
+            <div class="game-iframe-fallback-icon">🎮</div>
+            <div>ゲームを読み込めませんでした</div>
+          </div>
+        </noscript>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <span class="section-label label-green">POINT</span>
+      <h2>💡 何が面白いポイントか</h2>
+      <p>ManusやGenSparkは、作ったWebアプリをそのままURLとして共有できます。</p>
+      <div class="point-box">
+        ✅ <strong>テスト版Webアプリを即共有</strong><br>
+        プログラミング知識ゼロ・無料アカウントで、動くWebアプリを数分で作成しURLを発行。試作品やデモをチームやコミュニティに素早く共有するのに最適です。
+      </div>
+      <p style="margin-top:12px;">GSGのような勉強会コミュニティでも、アイデアを素早く形にしてメンバーと共有する使い方が広がりそうです😊</p>
+    </div>
+  </div>
+
+  <!-- 招待リンク -->
+  <div class="section">
+    <div class="invite-card">
+      <span class="section-label label-orange" style="margin-bottom:12px; background:rgba(255,255,255,0.12); color:#fed7aa; border:1px solid rgba(255,255,255,0.2);">INVITATION</span>
+      <h2>🚀 Manusを使ってみよう</h2>
+      <p>Manusが気になった方は、招待リンクから無料登録してみてください。登録は無料で、すぐに試せます。</p>
+      <a href="https://manus.im/invitation/XQSKF0SK6NDLDM?utm_source=invitation&utm_medium=social&utm_campaign=system_share" target="_blank" rel="noopener" class="invite-btn">
+        🤖 Manusを無料で使ってみる →
+      </a>
+      <p class="invite-note">招待リンクからの登録で優先アクセスが得られる場合があります</p>
+    </div>
+  </div>
+
+  <!-- BACK -->
+  <div class="back-top">
+    <a href="#top">↑ トップへ戻る</a>　／　<a href="./index.html">🏠 GSGホームへ</a>
+  </div>
+
+  <div class="page-footer">GSG Members — Manus × Tetris</div>
+
+</div>
+</body>
+</html>
